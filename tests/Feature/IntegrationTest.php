@@ -14,7 +14,7 @@ class IntegrationTest extends TestCase
     public function test_the_application_returns_a_successful_response(
         string $website,
         string $expected,
-        ?string $errors = null
+        ?array $errors = null
     ): void {
         $view = $this->view(
             'welcome',
@@ -31,7 +31,7 @@ class IntegrationTest extends TestCase
         $view->assertSee($website);
 
         if ($errors) {
-            $view->assertSee($errors);
+            $view->assertSee(implode($errors));
         }
     }
 
@@ -45,12 +45,12 @@ class IntegrationTest extends TestCase
             'Invalid website 1' => [
                 'website' => 'Test .',
                 'expected' => 'Test .',
-                'errors' => 'The given website is Invalid. Try again.'
+                'errors' => ['The given website is Invalid. Try again.']
             ],
             'Invalid website 2' => [
                 'website' => 'www.fakewebsite.com',
                 'expected' => 'fakewebsite/',
-                'errors' => 'The given website is Invalid. Try again.'
+                'errors' => ['The given website is Invalid. Try again.']
             ]
         ];
     }
