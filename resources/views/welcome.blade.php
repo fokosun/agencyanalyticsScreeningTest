@@ -27,7 +27,7 @@
                         <button>Submit</button>
                     </form>
                     <div>
-                        @if($errors != "")
+                        @if($errors)
                             <div style="color: red;">
                                 {{ implode($errors) }}
                             </div>

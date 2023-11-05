@@ -20,7 +20,7 @@ class HomeController extends Controller
                 $crawler->setUrl($url);
                 $crawler->setLinksDepth((int) $request->level);
             } else {
-                $errors = ['The given website is Invalid. Try again.'];
+                $errors = ['The given website is Invalid. Please try again.'];
             }
         }
 
