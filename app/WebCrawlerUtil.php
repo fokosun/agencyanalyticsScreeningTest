@@ -19,7 +19,7 @@ class WebCrawlerUtil
     protected float $uniqueImages = 0;
     protected int $uniqueInternalLinks = 0;
     protected int $uniqueExternalLinks = 0;
-    protected float $average_Page_lLoad = 0;
+    protected float $averagePageLoadTime = 0;
     protected float $averageWordCount = 0;
     protected float $averageTitleLength = 0;
     protected string $scheme = '';
@@ -64,7 +64,7 @@ class WebCrawlerUtil
                'Unique Images' => $this->uniqueImages,
                'Unique Internal Links' => $this->uniqueInternalLinks,
                'Unique External Links' => $this->uniqueExternalLinks,
-               'Average page load in seconds' => $this->average_Page_lLoad,
+               'Average page load in seconds' => $this->averagePageLoadTime,
                'Average Word Count' => $this->averageWordCount,
                'Average Title Length' => $this->averageTitleLength,
            ],
@@ -142,7 +142,7 @@ class WebCrawlerUtil
             $this->uniqueInternalLinks = count(array_unique($this->linksToCrawl));
             $this->uniqueExternalLinks = count(array_unique($externalLinks));
             $this->averageWordCount = round($totalWordCount / $pagesCrawled);
-            $this->average_Page_lLoad = round($this->pageLoadTime / $pagesCrawled, 6);
+            $this->averagePageLoadTime = round(($this->pageLoadTime / $pagesCrawled), 8);
             $this->averageTitleLength = round($pageTitleLength / $pagesCrawled);
         }
 
@@ -158,7 +158,7 @@ class WebCrawlerUtil
 
         $response = $client->get($url, [
             'on_stats' => function (TransferStats $stats) {
-                $this->pageLoadTime += $stats->getHandlerStats()['total_time'];
+                $this->pageLoadTime += $stats->getTransferTime() / 1000;
             },
             'http_errors' => false
         ]);
