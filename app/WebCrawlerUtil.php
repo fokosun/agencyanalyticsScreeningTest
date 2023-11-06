@@ -158,7 +158,7 @@ class WebCrawlerUtil
 
         $response = $client->get($url, [
             'on_stats' => function (TransferStats $stats) {
-                $this->pageLoadTime += $stats->getTransferTime() / 1000;
+                $this->pageLoadTime += $stats->getTransferTime(); //seconds
             },
             'http_errors' => false
         ]);
